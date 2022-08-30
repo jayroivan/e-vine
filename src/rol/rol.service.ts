@@ -20,15 +20,8 @@ export class RolService {
     return await this.rolModel.findOne({rol:rol})
   }
 
-  findAll() {
-    return `This action returns all rol`;
+  async findAll(): Promise<Rol[]> {
+    return this.rolModel.find().exec();
   }
 
-  update(id: number, updateRolDto: UpdateRolDto) {
-    return `This action updates a #${id} rol`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} rol`;
-  }
 }
