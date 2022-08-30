@@ -14,7 +14,7 @@ export class UsuarioController {
     async createUser(@Body() datos:CreateUsuarioDto): Promise<Usuario> {
         const saltOrRounds = 10;
         const claveEncriptada = await bcrypt.hash(datos.clave, saltOrRounds); // acá se encripta
-        const result = await this.usuarioService.createUser(datos.usuario,claveEncriptada);
+        const result = await this.usuarioService.createUser(datos.usuario,datos.email,claveEncriptada,datos.telefono,datos.rol);
         return result;
     }
 

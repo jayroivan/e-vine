@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, ObjectId } from 'mongoose';
 
 export type UserDocument = Usuario & Document;
 
@@ -19,8 +19,8 @@ export class Usuario {
   @Prop()
   telefono: number;
 
-  @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Rol', required: true})
-  rol: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Rol', required: true })
+  rol: ObjectId
 }
 
 export const UsuarioSchema = SchemaFactory.createForClass(Usuario);
