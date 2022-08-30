@@ -19,8 +19,8 @@ export class Usuario {
   @Prop()
   telefono: number;
 
-  @Prop()
-  rol: { type: mongoose.Schema.Types.ObjectId, ref: 'Rol', required: true }
+  @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Rol', required: true})
+  rol: string;
 }
 
 export const UsuarioSchema = SchemaFactory.createForClass(Usuario);
