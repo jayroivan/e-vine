@@ -15,7 +15,7 @@ export class RolController {
     return await this.rolService.createRol(datos.nombre);
   }
 
-  @Get()
+  @Get('/todos')
   findAll() {
     return this.rolService.findAll();
   }
@@ -23,15 +23,5 @@ export class RolController {
   @Get('/buscaruno')
   async getRol(@Body('rol') rol: string): Promise<Rol> {
     return await this.rolService.getRol(rol);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRolDto: UpdateRolDto) {
-    return this.rolService.update(+id, updateRolDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.rolService.remove(+id);
   }
 }
