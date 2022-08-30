@@ -8,7 +8,7 @@ import { Rol } from './entities/rol.entity';
 export class RolController {
   constructor(private readonly rolService: RolService) {}
 
-  @Post('/rol/create')
+  @Post('/create')
   async createRl(@Body() datos:CreateRolDto): Promise<Rol> {
     return await this.rolService.createRol(datos.nombre);
   }
@@ -18,7 +18,7 @@ export class RolController {
     return this.rolService.findAll();
   }
 
-  @Get('/rol/buscaruno')
+  @Get('/buscaruno')
   async getRol(@Body('rol') rol: string): Promise<Rol> {
     return await this.rolService.getRol(rol);
   }

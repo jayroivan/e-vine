@@ -5,9 +5,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { MongooseModule } from "@nestjs/mongoose"
 import { LocalStrategy } from "./strategies/local.strategy";
-import { UsuarioSchema } from "src/usuario/entities/usuario.entity";
-import { UsuarioModule } from "src/usuario/usuario.module";
-import { UsuarioService } from "src/usuario/usuario.service";
+import { UsuarioSchema } from "../usuario/entities/usuario.entity";
+import { UsuarioModule } from "../usuario/usuario.module";
+import { UsuarioService } from "../usuario/usuario.service";
 import { JwtStrategy } from "./strategies/jwt.strategy";
  
  
