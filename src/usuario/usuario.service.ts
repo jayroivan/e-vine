@@ -23,6 +23,7 @@ export class UsuarioService {
     
       return await this.userModel.findOne({usuario:usuario});
   }
+  
   async findAll(): Promise<Usuario[]> {
 
      return this.userModel.find({},{usuario:1, email:1, telefono:1}).exec();
@@ -38,6 +39,5 @@ export class UsuarioService {
 
         return this.userModel.findByIdAndUpdate({_id: id}, user, {new: true}).exec();
     }
-  }
   
 }

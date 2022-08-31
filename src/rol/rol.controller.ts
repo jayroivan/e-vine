@@ -11,8 +11,8 @@ export class RolController {
   constructor(private readonly rolService: RolService) {}
 
   @Post('/create')
-  async createRl(@Body() datos:CreateRolDto): Promise<Rol> {
-    return await this.rolService.createRol(datos.nombre);
+  async createRl(@Body() createRolDto:CreateRolDto): Promise<Rol> {
+    return await this.rolService.createRol(createRolDto);
   }
 
   @Get('/todos')

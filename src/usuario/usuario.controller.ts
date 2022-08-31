@@ -29,7 +29,7 @@ export class UsuarioController {
       const resultado = await this.usuarioService.getUser(usuario)
       return resultado;
     }
-
+    
   @UseGuards(JwtAuthGuard)
   @Get('/lista')
     findAll() {
@@ -45,5 +45,4 @@ export class UsuarioController {
       const resultado = this.usuarioService.updateUser(id, datos.usuario, datos.email, claveEncriptada, datos.telefono);
       return resultado;
     }
-
 }
