@@ -23,5 +23,9 @@ export class UsuarioService {
     
       return await this.userModel.findOne({usuario:usuario});
   }
+
+  async findAll(): Promise<Usuario[]> {
+    return this.userModel.find().exec();
+  }
   
 }

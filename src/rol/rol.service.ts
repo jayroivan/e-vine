@@ -10,10 +10,8 @@ export class RolService {
 
   constructor(@InjectModel('rol') private readonly rolModel: Model<RolDocument>){}
 
-  async createRol(nombre: string): Promise<Rol> {
-    return this.rolModel.create({
-      nombre
-    });
+  async createRol(createRolDto:CreateRolDto): Promise<Rol> {
+    return this.rolModel.create(createRolDto);
   }
 
   async getRol(rol): Promise<Rol> {

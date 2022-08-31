@@ -30,4 +30,10 @@ export class UsuarioController {
       const resultado=await this.usuarioService.getUser(usuario)
       return resultado;
     }
+
+
+    @Get('/todos')
+    findAll() {
+    return this.usuarioService.findAll();
+    }
 }
