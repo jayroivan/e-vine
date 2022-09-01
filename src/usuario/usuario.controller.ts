@@ -5,9 +5,9 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto'
 import { Usuario } from './entities/usuario.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import {ApiTags, ApiBody} from '@nestjs/swagger'
+import {ApiTags, ApiBody, ApiBearerAuth} from '@nestjs/swagger'
 
-
+@ApiBearerAuth('JWT-auth')
 @ApiTags('Usuarios')
 @Controller('usuario')
 export class UsuarioController {

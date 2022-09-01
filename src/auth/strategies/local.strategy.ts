@@ -8,7 +8,8 @@ import { AuthService } from '../auth.service';
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
     super({
-      usernameField: 'usuario', //necesitamos que sepa como se llaman las llaven de nuestro json
+      
+      usernameField: 'email', //necesitamos que sepa como se llaman las llaven de nuestro json
       passwordField: 'clave', //si usa password y username no debe de establecer estas opciones
  
       // asi lo enviamos { "usuario":"Administrador",  "clave":"123456" }

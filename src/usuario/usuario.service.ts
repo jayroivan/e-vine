@@ -20,9 +20,13 @@ export class UsuarioService {
       });
   }
   async getUser( usuario ): Promise<Usuario> {
-    
+      console.log(usuario)
       return await this.userModel.findOne({usuario:usuario});
   }
+
+  async getUserEmail( email ): Promise<Usuario> {
+    return await this.userModel.findOne({email:email});
+}
 
   async findAll(): Promise<Usuario[]> {
 

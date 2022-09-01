@@ -4,8 +4,9 @@ import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Categoria } from './entities/categoria.entity';
-import {ApiTags, ApiBody} from '@nestjs/swagger'
+import {ApiTags, ApiBody, ApiBearerAuth} from '@nestjs/swagger'
 
+@ApiBearerAuth('JWT-auth')
 @ApiTags('Categorias')
 @Controller('categoria')
 export class CategoriaController {

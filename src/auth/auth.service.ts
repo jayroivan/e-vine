@@ -8,7 +8,7 @@ import { Usuario } from '../usuario/entities/usuario.entity';
 export class AuthService {
     constructor(private readonly usersService: UsuarioService, private jwtService: JwtService) { }
     async login(user: any) {
-        const usuario:Usuario = await this.usersService.getUser( user.usuario);
+        const usuario:Usuario = await this.usersService.getUserEmail( user.email );
         if (!usuario) return   new NotAcceptableException('No existe el usuario indicado');
         const validarPassword = await bcrypt.compare(user.clave, usuario.clave)
         if (usuario && validarPassword) {
