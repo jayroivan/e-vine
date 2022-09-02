@@ -13,7 +13,7 @@ export class AuthController {
      }
  
    @UseGuards(LocalAuthGuard)
-   @ApiBody({type:CreateUsuarioDto})
+   @ApiBody({schema: {type: 'object', properties: {email: { type: 'string', example: 'example@gmail.com' }, clave: { type: 'string', example: '********'}}}})
     @Post('auth/login') // login requiere un json { "usuario":"Administrador2", "clave":"123456" }
     async login(@Request() req) {
         //req lleva todos los datos del request por lo tanto se extrae lo que va en el body
