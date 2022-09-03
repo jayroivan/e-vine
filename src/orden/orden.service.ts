@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Producto, ProductoDocument } from 'src/producto/entities/producto.entity';
 import { CreateOrdenDto } from './dto/create-orden.dto';
 import { UpdateOrdenDto } from './dto/update-orden.dto';
 import { Orden, OrdenDocument } from './entities/orden.entity';
@@ -8,9 +9,20 @@ import { Orden, OrdenDocument } from './entities/orden.entity';
 @Injectable()
 export class OrdenService {
 
-  constructor(@InjectModel('orden') private readonly ordenModel: Model<OrdenDocument>) { }
+  constructor(@InjectModel('orden') private readonly ordenModel: Model<OrdenDocument>, @InjectModel('producto') private readonly productoModel: Model<ProductoDocument>) { }
 
   async create(createOrdenDto: CreateOrdenDto): Promise<Orden> {
+    let detalle = createOrdenDto.detalle;
+
+    detalle.forEach(async item => {
+      let producto = await this.productoModel.findById(item.producto);
+      if(producto != null){
+        var result: number = producto.stock - item.cantidad;
+        producto.stock = result;
+        await this.productoModel.findByIdAndUpdate({_id: producto._id}, producto, {new: true})
+      }      
+    });
+
     return await this.ordenModel.create(createOrdenDto);
   }
 
