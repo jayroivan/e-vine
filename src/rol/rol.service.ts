@@ -14,8 +14,8 @@ export class RolService {
     return this.rolModel.create(createRolDto);
   }
 
-  async getRol(rol): Promise<Rol> {
-    return await this.rolModel.findOne({rol:rol})
+  async getRol(id: string): Promise<Rol> {
+    return await this.rolModel.findById(id);
   }
 
   async findAll(): Promise<Rol[]> {

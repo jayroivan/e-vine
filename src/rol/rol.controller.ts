@@ -27,8 +27,8 @@ export class RolController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('/buscaruno')
-  async getRol(@Body('rol') rol: string): Promise<Rol> {
-    return await this.rolService.getRol(rol);
+  @Get('/buscaruno:id')
+  async getRol(@Param('id') id: string): Promise<Rol> {
+    return await this.rolService.getRol(id);
   }
 }

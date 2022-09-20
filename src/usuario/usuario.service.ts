@@ -19,9 +19,8 @@ export class UsuarioService {
           rol
       });
   }
-  async getUser( usuario ): Promise<Usuario> {
-      console.log(usuario)
-      return await this.userModel.findOne({usuario:usuario});
+  async getUser( id ): Promise<Usuario> {
+      return await this.userModel.findById(id);
   }
 
   async getUserEmail( email ): Promise<Usuario> {

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Res, Param, Delete, Put, UseGuards, HttpStatus } from '@nestjs/common';
 import { OrdenService } from './orden.service';
 import { CreateOrdenDto } from './dto/create-orden.dto';
 import { UpdateOrdenDto } from './dto/update-orden.dto';
@@ -15,16 +15,21 @@ export class OrdenController {
   @UseGuards(JwtAuthGuard)
   @ApiBody({type:CreateOrdenDto})
   @Post('/crear')
-  async create(@Body() createOrdenDto: CreateOrdenDto): Promise<Orden> {
-    let detalle = createOrdenDto.detalle;
-    let total: number = 0;
+  async create(@Res() res, @Body() createOrdenDto: CreateOrdenDto): Promise<Orden> {
+    try {
+      let detalle = createOrdenDto.detalle;
+      let total: number = 0;
 
-    detalle.forEach(item => {
-      total += item.subtotal;
-    });
+      detalle.forEach(item => {
+        total += item.subtotal;
+      });
 
-    createOrdenDto.total= total;
-    return this.ordenService.create(createOrdenDto);
+      createOrdenDto.total= total;
+      await this.ordenService.create(createOrdenDto);
+      return res.status(HttpStatus.OK).json({message: 'Orden creada con exito!'})
+    } catch (error) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message: 'Ocurrio un error al crear la orden'})
+    }
   }
 
   @UseGuards(JwtAuthGuard)
@@ -43,17 +48,22 @@ export class OrdenController {
   @UseGuards(JwtAuthGuard)
   @ApiBody({type:UpdateOrdenDto})
   @Put('/actualizar/:id')
-  async update(@Param('id') id: string, @Body() updateOrdenDto: UpdateOrdenDto): Promise<Orden> {
-    let detalle = updateOrdenDto.detalle;
-    let total: number = 0;
+  async update(@Res() res, @Param('id') id: string, @Body() updateOrdenDto: UpdateOrdenDto): Promise<Orden> {
+    try {
+      let detalle = updateOrdenDto.detalle;
+      let total: number = 0;
 
-    detalle.forEach(item => {
-      total += item.subtotal;
-    });
+      detalle.forEach(item => {
+        total += item.subtotal;
+      });
 
-    updateOrdenDto.total = total;
+      updateOrdenDto.total = total;
 
-    return this.ordenService.update(id, updateOrdenDto);
+      await this.ordenService.update(id, updateOrdenDto);
+      return res.status(HttpStatus.OK).json({message: 'Orden actualizada con exito!'})
+    } catch (error) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message: 'Ocurrio un error al actualizar la orden'})
+    }
   }
 
   @UseGuards(JwtAuthGuard)

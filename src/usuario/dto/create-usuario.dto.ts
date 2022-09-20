@@ -14,6 +14,6 @@ export class CreateUsuarioDto {
     @ApiProperty()
     telefono: number;
 
-    @ApiProperty()
+    @ApiProperty({default: "630e4904c649bf6ec9ce0c35"})
     rol: Schema.Types.ObjectId
 }

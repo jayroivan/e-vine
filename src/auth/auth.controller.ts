@@ -3,7 +3,6 @@ import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import {ApiBearerAuth, ApiBody} from '@nestjs/swagger'
-import { CreateUsuarioDto } from '../usuario/dto/create-usuario.dto';
  
 @ApiBearerAuth('JWT-auth')
 @Controller()
@@ -14,14 +13,12 @@ export class AuthController {
  
    @UseGuards(LocalAuthGuard)
    @ApiBody({schema: {type: 'object', properties: {email: { type: 'string', example: 'example@gmail.com' }, clave: { type: 'string', example: '********'}}}})
-    @Post('auth/login') // login requiere un json { "usuario":"Administrador2", "clave":"123456" }
+    @Post('auth/login') 
     async login(@Request() req) {
-        //req lleva todos los datos del request por lo tanto se extrae lo que va en el body
         return this.authService.login(req.body);
     }
- 
-    //Aseguramos la ruta
-    @UseGuards(JwtAuthGuard) //hay que enviar el token
+
+    @UseGuards(JwtAuthGuard)
     @Get('secreto')
     secreto(@Request() req) {
         return { mensaje:"Usuario autenticado" };

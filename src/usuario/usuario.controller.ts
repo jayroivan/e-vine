@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Res, Param, Delete, UseGuards, Put, HttpStatus } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto'
@@ -14,19 +14,22 @@ export class UsuarioController {
 
   constructor(private readonly usuarioService: UsuarioService) {}
   @ApiBody({type:CreateUsuarioDto})
-  @Post('/crear') //se envia un json { "usuario":"Administrador",  "clave":"123456" }
-    async createUser(@Body() datos:CreateUsuarioDto): Promise<Usuario> {
-        const saltOrRounds = 10;
-        const claveEncriptada = await bcrypt.hash(datos.clave, saltOrRounds); // acá se encripta
-        const result = await this.usuarioService.createUser(datos.usuario,datos.email,claveEncriptada,datos.telefono,datos.rol);
-        return result;
+  @Post('/crear')
+    async createUser(@Res() res, @Body() datos:CreateUsuarioDto): Promise<Usuario> {
+        try {
+          const saltOrRounds = 10;
+          const claveEncriptada = await bcrypt.hash(datos.clave, saltOrRounds);
+          await this.usuarioService.createUser(datos.usuario,datos.email,claveEncriptada,datos.telefono,datos.rol);
+          return res.status(HttpStatus.OK).json({message: 'Usuario creado con exito!'})
+        } catch (error) {
+          return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message: 'Ocurrio un error al crear el usuario'})
+        }
     }
 
-  @UseGuards(JwtAuthGuard) //necesita un token para consultar este recurso
-  @ApiBody({type:CreateUsuarioDto})
-  @Get('/buscarUno') //se envia un json { "usuario":"Administrador",  "clave":"123456" }
-    async getUser( @Body('usuario') usuario: string): Promise<Usuario> {
-      const resultado = await this.usuarioService.getUser(usuario)
+  @UseGuards(JwtAuthGuard)
+  @Get('/buscarUno:id')
+    async getUser( @Param('id') id: string): Promise<Usuario> {
+      const resultado = await this.usuarioService.getUser(id)
       return resultado;
     }
     
@@ -39,10 +42,15 @@ export class UsuarioController {
   @UseGuards(JwtAuthGuard)
   @ApiBody({type:UpdateUsuarioDto})
   @Put('/actualizar/:id')
-    async updateUser(@Body() datos: UpdateUsuarioDto, @Param("id") id: string ): Promise<Usuario> {
-      const saltOrRounds = 10;
-      const claveEncriptada = await bcrypt.hash(datos.clave, saltOrRounds); // acá se encripta
-      const resultado = this.usuarioService.updateUser(id, datos.usuario, datos.email, claveEncriptada, datos.telefono);
-      return resultado;
+    async updateUser(@Res() res, @Body() datos: UpdateUsuarioDto, @Param("id") id: string ): Promise<Usuario> {
+      try {
+        const saltOrRounds = 10;
+        const claveEncriptada = await bcrypt.hash(datos.clave, saltOrRounds);
+        await this.usuarioService.updateUser(id, datos.usuario, datos.email, claveEncriptada, datos.telefono);
+        return res.status(HttpStatus.OK).json({message:'Usuario actualizado con exito!'})
+      } catch (error) {
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message:'Error al actualizar usuario'})
+      }
+
     }
 }

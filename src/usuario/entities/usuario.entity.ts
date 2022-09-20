@@ -10,16 +10,16 @@ export class Usuario {
   @Prop()
   usuario: string;
 
-  @Prop()
+  @Prop({required:true, unique:true})
   email: string;
 
-  @Prop()
+  @Prop({required:true})
   clave: string;
 
-  @Prop()
+  @Prop({required:true})
   telefono: number;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Rol', required: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Rol', required: true, default:"630e4904c649bf6ec9ce0c35" })
   rol: ObjectId
 }
 

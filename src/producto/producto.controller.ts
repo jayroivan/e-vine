@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Res, Param, Delete, UseGuards, Put, HttpStatus } from '@nestjs/common';
 import { ProductoService } from './producto.service';
 import { CreateProductoDto } from './dto/create-producto.dto';
 import { UpdateProductoDto } from './dto/update-producto.dto';
@@ -15,8 +15,13 @@ export class ProductoController {
   @UseGuards(JwtAuthGuard)
   @ApiBody({type:CreateProductoDto})
   @Post('/crear')
-  async create(@Body() createProductoDto: CreateProductoDto): Promise<Producto> {
-    return this.productoService.create(createProductoDto);
+  async create(@Res() res,@Body() createProductoDto: CreateProductoDto): Promise<Producto> {
+    try {
+      await this.productoService.create(createProductoDto);
+      return res.status(HttpStatus.OK).json({message: 'Producto creado con exito!'})
+    } catch (error) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message: 'Ocurrio un error al crear el producto'})
+    }
   }
 
   @UseGuards(JwtAuthGuard)
@@ -26,7 +31,6 @@ export class ProductoController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiBody({type:CreateProductoDto})
   @Get('/obtenerUno/:id')
   async findOne(@Param('id') id: string): Promise<Producto>  {
     return this.productoService.findOne(id);
@@ -35,8 +39,13 @@ export class ProductoController {
   @UseGuards(JwtAuthGuard)
   @ApiBody({type:UpdateProductoDto})
   @Put('/actualizar/:id')
-  async update(@Param('id') id: string, @Body() updateProductoDto: UpdateProductoDto): Promise<Producto>  {
-    return this.productoService.update(id, updateProductoDto);
+  async update(@Res() res, @Param('id') id: string, @Body() updateProductoDto: UpdateProductoDto): Promise<Producto>  {
+    try {
+      await this.productoService.update(id, updateProductoDto);
+      return res.status(HttpStatus.OK).json({message: 'Producto actualizado con exito!'})
+    } catch (error) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message: 'Ocurrio un error al actualizar el producto'})
+    }
   }
 
   @UseGuards(JwtAuthGuard)

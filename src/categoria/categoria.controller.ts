@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Res, Param, Delete, Put, UseGuards, HttpStatus } from '@nestjs/common';
 import { CategoriaService } from './categoria.service';
 import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria.dto';
@@ -15,8 +15,13 @@ export class CategoriaController {
   @UseGuards(JwtAuthGuard)
   @ApiBody({type:CreateCategoriaDto})
   @Post('/crear')
-  async create(@Body() createCategoriaDto: CreateCategoriaDto): Promise<Categoria> {
-    return this.categoriaService.create(createCategoriaDto);
+  async create(@Res() res, @Body() createCategoriaDto: CreateCategoriaDto): Promise<Categoria> {
+    try {
+      await this.categoriaService.create(createCategoriaDto);
+      return res.status(HttpStatus.OK).json({message: 'Categoria creada con exito!'})
+    } catch (error) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message: 'Ocurrio un error al crear la caegoria'})
+    }
   }
 
   @UseGuards(JwtAuthGuard)
@@ -35,8 +40,13 @@ export class CategoriaController {
   @UseGuards(JwtAuthGuard)
   @ApiBody({type:UpdateCategoriaDto})
   @Put('/actualizar/:id')
-  async update(@Param('id') id: string, @Body() updateCategoriaDto: UpdateCategoriaDto): Promise<Categoria>  {
-    return this.categoriaService.update(id, updateCategoriaDto);
+  async update(@Res() res, @Param('id') id: string, @Body() updateCategoriaDto: UpdateCategoriaDto): Promise<Categoria>  {
+    try {
+      await this.categoriaService.update(id, updateCategoriaDto);
+      return res.status(HttpStatus.OK).json({message: 'Categoria Actualizada con exito!'})
+    } catch (error) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message: 'Ocurrio un error al actualizar la categoria'})
+    }
   }
 
   @UseGuards(JwtAuthGuard)
