@@ -15,7 +15,7 @@ async function bootstrap() {
             description: 'Enter JWT token',
             in: 'header',
           },
-          'JWT-auth', // Mismo nombre a usar en el controlador cuando usemos el decorador @ApiBearerAuth() !
+          'JWT-auth',
           )
     .setDescription('Esto es un e-commerce sobre Vinos')
     .setVersion('1.0')
@@ -25,6 +25,6 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
