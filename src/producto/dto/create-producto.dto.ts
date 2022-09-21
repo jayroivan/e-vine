@@ -6,6 +6,9 @@ export class CreateProductoDto {
     nombre: string;
 
     @ApiProperty()
+    imagen: string;
+
+    @ApiProperty()
     precio: number;
 
     @ApiProperty()

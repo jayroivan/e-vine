@@ -8,6 +8,9 @@ export class UpdateProductoDto extends PartialType(CreateProductoDto) {
     nombre: string;
 
     @ApiProperty()
+    imagen: string;
+
+    @ApiProperty()
     precio: number;
 
     @ApiProperty()
