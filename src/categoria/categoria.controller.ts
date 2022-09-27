@@ -31,7 +31,6 @@ export class CategoriaController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiBody({type:CreateCategoriaDto})
   @Get('/obtenerUno/:id')
   async findOne(@Param('id') id: string): Promise<Categoria>  {
     return this.categoriaService.findOne(id);

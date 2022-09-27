@@ -29,10 +29,10 @@ export class CategoriaService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<Categoria> {
     let categoria = await this.categoriaModel.findById(id);
     if(categoria != null){
-      return this.categoriaModel.findByIdAndRemove({id});
+      return this.categoriaModel.findByIdAndRemove(id);
     }    
   }
 }
