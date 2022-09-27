@@ -51,7 +51,7 @@ export class CategoriaController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('/eliminar/:id')
-  async remove(@Param('id') id: string): Promise<Categoria>  {
+  async remove(@Param('id') id: string) {
     return this.categoriaService.remove(id);
   }
 }
