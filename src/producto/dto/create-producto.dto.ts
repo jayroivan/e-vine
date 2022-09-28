@@ -18,5 +18,5 @@ export class CreateProductoDto {
     stock: number;
 
     @ApiProperty()
-    categoria: Schema.Types.ObjectId
+    categoria: Schema.Types.ObjectId;
 }

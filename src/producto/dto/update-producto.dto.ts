@@ -20,5 +20,6 @@ export class UpdateProductoDto extends PartialType(CreateProductoDto) {
     stock: number;
 
     @ApiProperty()
-    categoria: Schema.Types.ObjectId
+    categoria: Schema.Types.ObjectId;
+
 }
