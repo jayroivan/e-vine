@@ -29,7 +29,7 @@ export class ProductoService {
     }
   }
   
-  async remove(id: number): Promise<Producto> {
+  async remove(id: string): Promise<Producto> {
     let producto = await this.productoModel.findById(id);
     if(producto != null){
       return await this.productoModel.findByIdAndRemove(id);

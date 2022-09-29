@@ -52,6 +52,6 @@ export class ProductoController {
   @ApiBody({type:CreateProductoDto})
   @Delete('/eliminar/:id')
   async remove(@Param('id') id: string): Promise<Producto>  {
-    return this.productoService.remove(+id);
+    return this.productoService.remove(id);
   }
 }
