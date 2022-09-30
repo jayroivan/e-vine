@@ -38,6 +38,7 @@ export class OrdenController {
     return this.ordenService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/obtenerultimaorden')
   obtenerUltimaOrden(){
     return this.ordenService.obtenerUltimaOrden();
