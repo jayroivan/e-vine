@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 import { detalle } from "./detalle.entity";
 
 export type OrdenDocument = Orden & Document;
@@ -16,6 +16,9 @@ export class Orden {
 
     @Prop()
     total: number;
+
+    @Prop({type: Types.ObjectId})
+    usuario: string
 
     @Prop({type: Array})
     detalle: detalle[]

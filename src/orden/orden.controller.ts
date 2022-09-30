@@ -38,6 +38,11 @@ export class OrdenController {
     return this.ordenService.findAll();
   }
 
+  @Get('/obtenerultimaorden')
+  obtenerUltimaOrden(){
+    return this.ordenService.obtenerUltimaOrden();
+  }
+
   @UseGuards(JwtAuthGuard)
   @ApiBody({type:CreateOrdenDto})
   @Get('/buscarUno/:id')

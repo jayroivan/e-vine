@@ -34,6 +34,10 @@ export class OrdenService {
     return await this.ordenModel.findById(id);
   }
 
+  async obtenerUltimaOrden(): Promise<Orden>{
+    return await this.ordenModel.findOne().sort({_id: -1}).exec();
+  }
+
   async update(id: string, updateOrdenDto: UpdateOrdenDto): Promise<Orden> {
     let orden = await this.ordenModel.findById(id);
     if(orden != null){
