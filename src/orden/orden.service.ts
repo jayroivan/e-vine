@@ -27,7 +27,11 @@ export class OrdenService {
   }
 
   async findAll(): Promise<Orden[]> {
-    return await this.ordenModel.find().exec();
+    return await this.ordenModel.find().populate('usuario').exec();
+  }
+
+  async obtenertodas(id: string): Promise<Orden[]> {
+    return await this.ordenModel.find({usuario: id}).exec();
   }
 
   async findOne(id: string): Promise<Orden> {

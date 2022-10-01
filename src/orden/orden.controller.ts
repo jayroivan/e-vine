@@ -33,9 +33,15 @@ export class OrdenController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('/todos')
+  @Get('/todas')
   findAll() {
     return this.ordenService.findAll();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/todas/usuario/:id')
+  obtenertodasUsuario(@Param('id') id: string) {
+    return this.ordenService.obtenertodas(id);
   }
 
   @UseGuards(JwtAuthGuard)
